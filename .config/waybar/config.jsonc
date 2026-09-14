@@ -1,0 +1,61 @@
+{
+    "mode": "dock",
+    "layer": "top",
+    "position": "top",
+    "height": 0,
+    "width": 0,
+    "margin": 0,
+    "spacing": 0,
+    "reload_style_on_change": true,
+
+    "include": [
+        "~/.config/waybar/modules/custom/*.jsonc",
+        "~/.config/waybar/modules/hyprland/*.jsonc",
+        "~/.config/waybar/modules/*.jsonc"
+    ],
+
+    "modules-left": [
+        "hyprland/workspaces",
+        "hyprland/window"
+    ],
+
+    "modules-center": [
+        "hyprland/language",
+        "temperature",
+        "memory",
+        "cpu",
+        "custom/distro",
+        "clock#time",
+        "clock#date",
+        "network",
+        "custom/update"
+    ],
+
+    "modules-right": [
+        "mpris",
+        "group/pulseaudio",
+        "backlight",
+        "battery",
+        "custom/theme"
+    ],
+
+    "backlight": {
+        "device": "amdgpu_bl1",
+        "format": "{icon} {percent}%",
+        "format-icons": ["󰃞", "󰃟", "󰃠"],
+        "min-length": 7,
+        "max-length": 7,
+        "on-scroll-up": "brightnessctl set 5%+",
+        "on-scroll-down": "brightnessctl set 5%-",
+        "tooltip-format": "Brightness: {percent}%"
+    },
+
+    "cpu": {
+        "interval": 5,
+        "format": "󰘚 {usage}%",
+        "min-length": 8,
+        "max-length": 8,
+        "on-click": "kitty -e btop",
+        "tooltip-format": "CPU: {usage}%"
+    }
+}

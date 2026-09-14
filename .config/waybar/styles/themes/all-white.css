@@ -1,0 +1,32 @@
+/* Palette - All White Theme with Dark Green & Aqua Accents */
+@define-color white_pure     #ffffff;
+@define-color white_soft     #f8fafc;
+@define-color white_card     #f1f5f9;
+@define-color gray_mid       #e2e8f0;
+@define-color gray_dark      #0f172a;
+@define-color gray_black     #020617;
+@define-color gray_subtle    #475569;
+
+@define-color dark_green     #14532d;   /* Rich Dark Emerald Green */
+@define-color aqua_accent    #0891b2;   /* Vibrant Aqua Cyan */
+@define-color red_accent     #b91c1c;
+@define-color yellow_accent  #c2410c;
+
+/* Base colors */
+@define-color accent       #0891b2;   /* Aqua accent */
+@define-color fg           #0f172a;   /* Dark charcoal text for crisp readability */
+@define-color bg-0         #ffffff;
+@define-color bg-1         #f1f5f9;
+@define-color bg-2         #e2e8f0;
+@define-color bg-3         #cbd5e1;
+@define-color br           #cbd5e1;
+@define-color shadow       rgba(15, 23, 42, 0.12);
+
+/* States */
+@define-color warning      @yellow_accent;
+@define-color critical     @red_accent;
+@define-color charging     @dark_green;
+@define-color hover-bg     #e2e8f0;
+@define-color hover-fg     #0891b2;   /* Aqua hover text */
+@define-color active-ws-bg #14532d;   /* Dark Green active workspace pill */
+@define-color active-ws-fg #ffffff;   /* Pure white icon/text inside dark green pill */

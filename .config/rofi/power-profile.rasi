@@ -1,0 +1,97 @@
+/*****----- Power Profile Picker Theme (Catppuccin Mocha) -----*****/
+
+configuration {
+    show-icons:                 false;
+}
+
+/*****----- Global Properties -----*****/
+* {
+    font:                        "JetBrainsMono Nerd Font 10.5";
+    background:                  #11111be6;
+    foreground:                  #cdd6f4;
+    selected:                    #cba6f7;
+    border-col:                  #cba6f750;
+}
+
+/*****----- Main Window (Top-Right under Waybar Battery) -----*****/
+window {
+    transparency:                "real";
+    location:                    north east;
+    anchor:                      north east;
+    x-offset:                    -20px;
+    y-offset:                    38px;
+    fullscreen:                  false;
+    width:                       280px;
+
+    enabled:                     true;
+    border:                      1px solid;
+    border-color:                @border-col;
+    border-radius:               14px;
+    cursor:                      "default";
+    background-color:            @background;
+    padding:                     12px;
+}
+
+mainbox {
+    enabled:                     true;
+    spacing:                     8px;
+    background-color:            transparent;
+    children:                    [ "inputbar", "listview" ];
+}
+
+inputbar {
+    enabled:                     true;
+    padding:                     4px 8px;
+    border-radius:               8px;
+    background-color:            #31324466;
+    text-color:                  @foreground;
+    children:                    [ "prompt" ];
+}
+
+prompt {
+    enabled:                     true;
+    background-color:            transparent;
+    text-color:                  #cba6f7;
+    font:                        "JetBrainsMono Nerd Font 11";
+}
+
+listview {
+    enabled:                     true;
+    columns:                     1;
+    lines:                       3;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    spacing:                     4px;
+    background-color:            transparent;
+}
+
+element {
+    enabled:                     true;
+    padding:                     8px 12px;
+    border-radius:               8px;
+    background-color:            transparent;
+    text-color:                  @foreground;
+    cursor:                      pointer;
+}
+
+element normal.normal {
+    background-color:            transparent;
+    text-color:                  @foreground;
+}
+
+element selected.normal {
+    background-color:            rgba(203, 166, 247, 0.25);
+    text-color:                  #cba6f7;
+    border:                      1px solid;
+    border-color:                rgba(203, 166, 247, 0.6);
+}
+
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}

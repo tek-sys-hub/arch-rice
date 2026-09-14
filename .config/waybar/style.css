@@ -1,0 +1,72 @@
+/* Reset GTK theme */
+* { all: initial; }
+
+@import "styles/fonts/jetbrains-mono-nerd.css";
+@import "styles/themes/current.css";
+
+* {
+    font-weight: bold;
+    color: @fg;
+}
+
+#waybar {
+    background-color: transparent;
+}
+#waybar > box {
+    margin: 0px 0px;
+    padding: 0px;
+    background-color: transparent;
+}
+
+.modules-left {
+    background-color: transparent;
+    margin: 0px;
+    padding: 0px;
+}
+
+.modules-center {
+    background-color: @bg-1;
+    border-radius: 16px;
+    border: 1px solid alpha(@br, 0.25);
+    margin: 3px 4px;
+    padding: 0 6px;
+    box-shadow: 0 4px 10px alpha(@shadow, 0.25);
+}
+
+.modules-right {
+    background-color: @bg-1;
+    border-radius: 16px;
+    border: 1px solid alpha(@br, 0.25);
+    margin: 3px 4px;
+    padding: 0 6px;
+    box-shadow: 0 4px 10px alpha(@shadow, 0.25);
+}
+
+.module {
+    margin-bottom: 0px;
+}
+
+button {
+    border-radius: 16px;
+    padding: 0 10px;
+    min-width: 16px;
+}
+button:hover {
+    background-color: @hover-bg;
+    color: @hover-fg;
+}
+
+tooltip {
+    border: 2px solid @br;
+    background-color: @bg-0;
+}
+tooltip > box {
+    padding: 0 6px;
+}
+tooltip label {
+    font-weight: normal;
+}
+
+@import "styles/dividers.css";
+@import "styles/modules.css";
+@import "styles/states.css";

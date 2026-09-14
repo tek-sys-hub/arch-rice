@@ -1,0 +1,28 @@
+/* Palette - Cyberpunk Neon */
+@define-color bg_dark      #0d0f18;
+@define-color bg_card      #16192b;
+@define-color neon_pink    #ff007f;
+@define-color neon_cyan    #00f0ff;
+@define-color neon_yellow  #ffea00;
+@define-color fg_bright    #e0f7fa;
+
+/* Base colors */
+@define-color accent       @neon_pink;
+@define-color fg           @fg_bright;
+@define-color bg-0         @bg_dark;
+@define-color bg-1         @bg_card;
+@define-color bg-2         #212642;
+@define-color bg-3         #2b3254;
+@define-color br           @neon_cyan;
+@define-color shadow       rgba(255, 0, 127, 0.2);
+
+/* States */
+@define-color warning      @neon_yellow;
+@define-color critical     #ff2a6d;
+@define-color charging     @neon_cyan;
+@define-color hover-bg     #212642;
+@define-color hover-fg     @neon_cyan;
+
+/* Active workspace pill */
+@define-color active-ws-bg #ff007f;
+@define-color active-ws-fg #0d0f18;

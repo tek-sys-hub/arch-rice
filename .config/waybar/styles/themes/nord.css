@@ -1,0 +1,34 @@
+/* Palette - Nord */
+@define-color nord0 #2e3440;
+@define-color nord1 #3b4252;
+@define-color nord2 #434c5e;
+@define-color nord3 #4c566a;
+@define-color nord4 #d8dee9;
+@define-color nord7 #8fbcbb;
+@define-color nord8 #88c0d0;
+@define-color nord9 #81a1c1;
+@define-color nord10 #5e81ac;
+@define-color nord11 #bf616a;
+@define-color nord13 #ebcb8b;
+@define-color nord14 #a3be8c;
+
+/* Base colors */
+@define-color accent       @nord8;
+@define-color fg           @nord4;
+@define-color bg-0         @nord0;
+@define-color bg-1         @nord1;
+@define-color bg-2         @nord2;
+@define-color bg-3         @nord3;
+@define-color br           @nord3;
+@define-color shadow       rgba(0, 0, 0, 0.4);
+
+/* States */
+@define-color warning      @nord13;
+@define-color critical     @nord11;
+@define-color charging     @nord14;
+@define-color hover-bg     @nord2;
+@define-color hover-fg     #ffffff;
+
+/* Active workspace pill */
+@define-color active-ws-bg #88c0d0;
+@define-color active-ws-fg #2e3440;

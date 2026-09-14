@@ -1,0 +1,114 @@
+/*****----- 🎨 Theme Picker  -  Glassmorphism Style -----*****/
+
+configuration {
+    show-icons:             false;
+    font:                   "JetBrains Mono Nerd Font 12";
+}
+
+@import "colors.rasi"
+
+/* ── Window ────────────────────────────────────────────────────────────────── */
+window {
+    transparency:           "real";
+    location:               center;
+    anchor:                 center;
+    fullscreen:             false;
+    width:                  540px;
+    enabled:                true;
+    border:                 2px solid;
+    border-color:           @border-col;
+    border-radius:          20px;
+    cursor:                 "default";
+    background-color:       @background;
+    padding:                16px;
+}
+
+/* ── Main layout ───────────────────────────────────────────────────────────── */
+mainbox {
+    enabled:                true;
+    spacing:                10px;
+    padding:                0px;
+    background-color:       transparent;
+    children:               [ "inputbar", "listview" ];
+}
+
+/* ── Search bar ────────────────────────────────────────────────────────────── */
+inputbar {
+    enabled:                true;
+    spacing:                8px;
+    padding:                12px 16px;
+    border-radius:          14px;
+    background-color:       @input-bg;
+    text-color:             @foreground;
+    children:               [ "prompt", "entry" ];
+}
+
+prompt {
+    enabled:                true;
+    background-color:       transparent;
+    text-color:             @selected;
+    font:                   "JetBrains Mono Nerd Font Bold 14";
+    vertical-align:         0.5;
+}
+
+entry {
+    enabled:                true;
+    background-color:       transparent;
+    text-color:             @foreground;
+    placeholder:            "Filter themes…";
+    placeholder-color:      @foreground;
+    cursor:                 text;
+    vertical-align:         0.5;
+}
+
+/* ── Theme list ────────────────────────────────────────────────────────────── */
+listview {
+    enabled:                true;
+    columns:                1;
+    lines:                  9;
+    cycle:                  true;
+    dynamic:                true;
+    scrollbar:              false;
+    layout:                 vertical;
+    spacing:                4px;
+    padding:                4px 0px;
+    background-color:       transparent;
+    cursor:                 "default";
+}
+
+/* ── List items ────────────────────────────────────────────────────────────── */
+element {
+    enabled:                true;
+    orientation:            horizontal;
+    spacing:                14px;
+    padding:                11px 16px;
+    border-radius:          12px;
+    background-color:       transparent;
+    text-color:             @foreground;
+    cursor:                 pointer;
+}
+
+element normal.normal {
+    background-color:       transparent;
+    text-color:             @foreground;
+}
+
+element selected.normal {
+    background-color:       @selected;
+    border-radius:          12px;
+    text-color:             #ffffff;
+}
+
+element alternate.normal {
+    background-color:       transparent;
+    text-color:             @foreground;
+}
+
+element-text {
+    background-color:       transparent;
+    text-color:             inherit;
+    highlight:              inherit;
+    cursor:                 inherit;
+    vertical-align:         0.5;
+    font:                   "JetBrains Mono Nerd Font 12";
+}

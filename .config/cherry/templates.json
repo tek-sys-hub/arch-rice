@@ -1,0 +1,52 @@
+{
+  "variables.lua.template": {
+    "targets": [
+      "~/.config/hypr/modules/variables.lua"
+    ],
+    "scope": "hyprland"
+  },
+  "thunar.css": {
+    "targets": [
+      "~/.config/gtk-3.0/thunar.css",
+      "~/.config/gtk-4.0/thunar.css"
+    ],
+    "scope": "shell"
+  },
+  "adw-gtk3.css": {
+    "targets": [
+      "~/.config/gtk-3.0/gtk.css",
+      "~/.config/gtk-4.0/gtk.css"
+    ],
+    "scope": "shell"
+  },
+  "bpytop.theme": {
+    "targets": [
+      "~/.config/bpytop/themes/cherry.theme"
+    ],
+    "scope": "shared"
+  },
+  "vscode.json": {
+    "targets": [
+      "~/.cache/wallust/colors.json"
+    ],
+    "scope": "shared"
+  },
+  "vscode": {
+    "targets": [
+      "~/.cache/wallust/colors"
+    ],
+    "scope": "shared"
+  },
+  "cherry.colors": {
+    "targets": [
+      "~/.config/qtengine/cherry.colors"
+    ],
+    "scope": "shared"
+  },
+  "qmltermwidget.colorscheme": {
+    "targets": [
+      "/usr/lib/qt6/qml/QMLTermWidget/color-schemes/cherry.colorscheme"
+    ],
+    "scope": "shared"
+  }
+}

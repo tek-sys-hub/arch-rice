@@ -1,0 +1,31 @@
+/* Palette - Gruvbox Dark */
+@define-color bg0          #282828;
+@define-color bg1          #3c3836;
+@define-color bg2          #504945;
+@define-color fg0          #fbf1c7;
+@define-color yellow       #fabd2f;
+@define-color red          #fb4934;
+@define-color green        #b8bb26;
+@define-color blue         #83a598;
+@define-color orange       #fe8019;
+
+/* Base colors */
+@define-color accent       @yellow;
+@define-color fg           @fg0;
+@define-color bg-0         @bg0;
+@define-color bg-1         @bg1;
+@define-color bg-2         @bg2;
+@define-color bg-3         #665c54;
+@define-color br           #7c6f64;
+@define-color shadow       rgba(0, 0, 0, 0.4);
+
+/* States */
+@define-color warning      @orange;
+@define-color critical     @red;
+@define-color charging     @green;
+@define-color hover-bg     @bg2;
+@define-color hover-fg     #ffffff;
+
+/* Active workspace pill */
+@define-color active-ws-bg #fabd2f;
+@define-color active-ws-fg #282828;

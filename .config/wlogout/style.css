@@ -1,0 +1,90 @@
+* {
+    background-image: none;
+    box-shadow: none;
+    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", sans-serif;
+}
+
+window {
+    background-color: rgba(15, 17, 26, 0.85);
+}
+
+button {
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: rgba(30, 32, 48, 0.65);
+    color: #c0caf5;
+    font-size: 13px;
+    font-weight: 700;
+    margin: 12px;
+    padding: 24px;
+    background-repeat: no-repeat;
+    background-position: center 30%;
+    background-size: 28%;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button:focus, button:active, button:hover {
+    background-color: rgba(122, 162, 247, 0.25);
+    border: 1px solid rgba(122, 162, 247, 0.8);
+    color: #ffffff;
+    box-shadow: 0 0 20px rgba(122, 162, 247, 0.3);
+}
+
+#lock {
+    background-image: image(url("/usr/share/wlogout/icons/lock.png"));
+}
+
+#lock:hover {
+    background-color: rgba(122, 162, 247, 0.25);
+    border-color: #7aa2f7;
+}
+
+#suspend {
+    background-image: image(url("/usr/share/wlogout/icons/suspend.png"));
+}
+
+#suspend:hover {
+    background-color: rgba(45, 212, 191, 0.25);
+    border-color: #2dd4bf;
+    box-shadow: 0 0 20px rgba(45, 212, 191, 0.3);
+}
+
+#logout {
+    background-image: image(url("/usr/share/wlogout/icons/logout.png"));
+}
+
+#logout:hover {
+    background-color: rgba(250, 189, 47, 0.25);
+    border-color: #fabd2f;
+    box-shadow: 0 0 20px rgba(250, 189, 47, 0.3);
+}
+
+#reboot {
+    background-image: image(url("/usr/share/wlogout/icons/reboot.png"));
+}
+
+#reboot:hover {
+    background-color: rgba(56, 189, 248, 0.25);
+    border-color: #38bdf8;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+}
+
+#shutdown {
+    background-image: image(url("/usr/share/wlogout/icons/shutdown.png"));
+}
+
+#shutdown:hover {
+    background-color: rgba(248, 113, 113, 0.25);
+    border-color: #f87171;
+    box-shadow: 0 0 20px rgba(248, 113, 113, 0.3);
+}
+
+#hibernate {
+    background-image: image(url("/usr/share/wlogout/icons/hibernate.png"));
+}
+
+#hibernate:hover {
+    background-color: rgba(168, 85, 247, 0.25);
+    border-color: #a855f7;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+}

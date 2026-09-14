@@ -1,0 +1,31 @@
+/* Palette - Tokyo Night */
+@define-color bg_dark      #1a1b26;
+@define-color bg_highlight #24283b;
+@define-color fg_dark      #c0caf5;
+@define-color blue_dark    #7aa2f7;
+@define-color cyan_dark    #7dcfff;
+@define-color magenta_dark #bb9af7;
+@define-color red_dark     #f7768e;
+@define-color yellow_dark  #e0af68;
+@define-color green_dark   #9ece6a;
+
+/* Base colors */
+@define-color accent       @blue_dark;
+@define-color fg           @fg_dark;
+@define-color bg-0         @bg_dark;
+@define-color bg-1         #1f2335;
+@define-color bg-2         @bg_highlight;
+@define-color bg-3         #292e42;
+@define-color br           #3b4261;
+@define-color shadow       rgba(0, 0, 0, 0.4);
+
+/* States */
+@define-color warning      @yellow_dark;
+@define-color critical     @red_dark;
+@define-color charging     @green_dark;
+@define-color hover-bg     @bg_highlight;
+@define-color hover-fg     #ffffff;
+
+/* Active workspace pill */
+@define-color active-ws-bg #7aa2f7;
+@define-color active-ws-fg #1a1b26;

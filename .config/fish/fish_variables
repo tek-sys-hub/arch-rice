@@ -1,0 +1,4 @@
+# This file contains fish universal variable definitions.
+# VERSION: 3.0
+SETUVAR __fish_initialized:4300
+SETUVAR fish_user_paths:/home/cherry/Android/Sdk/emulator\x1e/home/cherry/Android/Sdk/cmdline\x2dtools/latest/bin\x1e/home/cherry/Android/Sdk/platform\x2dtools\x1e/home/cherry/development/flutter/bin

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Simple update checker for Arch Linux (pacman)
+if [[ "$1" == "module" ]]; then
+    count=$(checkupdates 2>/dev/null | wc -l)
+    if [[ $count -gt 0 ]]; then
+        echo "{\"text\": \"󰚰\", \"tooltip\": \"$count updates available\", \"class\": \"update\"}"
+    else
+        echo "{\"text\": \"󰚰\", \"tooltip\": \"System up to date\", \"class\": \"\"}"
+    fi
+else
+    kitty -e sudo pacman -Syu
+fi

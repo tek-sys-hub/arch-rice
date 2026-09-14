@@ -1,0 +1,138 @@
+[manager]
+ratio          = [1, 3, 4]   # sidebar : current : preview
+sort_by        = "natural"
+sort_sensitive = false
+sort_reverse   = false
+sort_dir_first = true
+sort_translit  = false
+linemode       = "size_and_mtime"
+show_hidden    = false
+show_symlink   = true
+scrolloff      = 5
+mouse_events   = ["click", "scroll"]
+title_format   = "Yazi: {cwd}"
+
+[preview]
+tab_size        = 2
+max_width       = 1200
+max_height      = 900
+cache_dir       = ""
+image_filter    = "triangle"
+image_quality   = 90
+sixel_fraction  = 15
+ueberzug_scale  = 1
+ueberzug_offset = [0, 0, 0, 0]
+
+[opener]
+edit = [
+  { run = 'nvim "$@"', desc = "nvim",  block = true, for = "unix" },
+  { run = 'nano "$@"', desc = "nano",  block = true, for = "unix" },
+]
+open = [
+  { run = 'xdg-open "$@"', desc = "Open", for = "unix" },
+]
+reveal = [
+  { run = 'xdg-open "$(dirname "$1")"', desc = "Reveal", for = "unix" },
+]
+extract = [
+  { run = 'unar "$1"',            desc = "Extract here", for = "unix" },
+]
+play = [
+  { run = 'mpv "$@"',    desc = "Play with mpv",  for = "unix" },
+]
+
+[open]
+rules = [
+  # Text / code
+  { mime = "text/*",                    use = ["edit", "open"] },
+  { mime = "application/json",          use = ["edit", "open"] },
+  { mime = "application/javascript",    use = ["edit", "open"] },
+  { mime = "inode/x-empty",             use = ["edit"] },
+
+  # Images
+  { mime = "image/*",                   use = ["open"] },
+
+  # Video & audio
+  { mime = "video/*",                   use = ["play", "open"] },
+  { mime = "audio/*",                   use = ["play", "open"] },
+
+  # Archives
+  { mime = "application/zip",           use = ["extract", "open"] },
+  { mime = "application/gzip",          use = ["extract", "open"] },
+  { mime = "application/x-tar",         use = ["extract", "open"] },
+  { mime = "application/x-bzip2",       use = ["extract", "open"] },
+  { mime = "application/x-7z-compressed", use = ["extract", "open"] },
+  { mime = "application/x-rar",         use = ["extract", "open"] },
+  { mime = "application/zstd",          use = ["extract", "open"] },
+
+  # PDF / Docs
+  { mime = "application/pdf",           use = ["open"] },
+
+  # Fallback
+  { mime = "*",                         use = ["open"] },
+]
+
+[tasks]
+micro_workers    = 10
+macro_workers    = 25
+bizarre_retry    = 5
+image_alloc      = 536870912  # 512 MB
+image_bound      = [0, 0]
+suppress_preload = false
+
+[plugin]
+preloaders = [
+  # Image
+  { mime = "image/{avif,hei?,jxl,svg+xml}", run = "magick" },
+  { mime = "image/*",                        run = "image"  },
+  # Video
+  { mime = "video/*", run = "video" },
+  # PDF
+  { mime = "application/pdf", run = "pdf" },
+  # Font
+  { mime = "font/*",             run = "font" },
+  { mime = "application/font*", run = "font" },
+]
+previewers = [
+  { url = "*/",          run = "folder",  sync = true },
+  # Code highlighting
+  { mime = "text/*",                  run = "code"  },
+  { mime = "application/json",        run = "json"  },
+  { mime = "application/javascript",  run = "code"  },
+  # Image
+  { mime = "image/{avif,hei?,jxl,svg+xml}", run = "magick" },
+  { mime = "image/*",                 run = "image" },
+  # Video
+  { mime = "video/*",                 run = "video" },
+  # PDF
+  { mime = "application/pdf",         run = "pdf"   },
+  # Archive
+  { mime = "application/zip",          run = "archive" },
+  { mime = "application/gzip",         run = "archive" },
+  { mime = "application/x-tar",        run = "archive" },
+  { mime = "application/x-bzip2",      run = "archive" },
+  { mime = "application/x-7z-compressed", run = "archive" },
+  { mime = "application/x-rar",        run = "archive" },
+  { mime = "application/zstd",         run = "archive" },
+  # Font
+  { mime = "font/*",             run = "font" },
+  { mime = "application/font*", run = "font" },
+  # Fallback
+  { url = "*", run = "file" },
+]
+
+[input]
+cursor_blink = true
+
+[select]
+open_title  = "Select an opener:"
+close_title = ""
+
+[which]
+sort_by      = "none"
+sort_sensitive = false
+sort_reverse   = false
+sort_translit  = false
+
+[log]
+enabled = false

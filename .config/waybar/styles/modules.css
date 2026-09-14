@@ -1,0 +1,149 @@
+/* Left Modules (Separate Pills) */
+
+/* Pill 1: Workspaces */
+#workspaces {
+	padding: 2px 6px;
+	margin: 3px 4px;
+	background-color: @bg-1;
+	border-radius: 16px;
+	border: 1px solid alpha(@br, 0.25);
+}
+
+#workspaces button {
+	border: none;
+	outline: none;
+	box-shadow: none;
+	text-shadow: none;
+	padding: 0 6px;
+	margin: 2px 3px;
+	border-radius: 12px;
+	color: @fg;
+	opacity: 0.55;
+	transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#workspaces button:focus,
+#workspaces button:active {
+	border: none;
+	outline: none;
+	box-shadow: none;
+}
+
+#workspaces button:hover {
+	opacity: 1.0;
+	background-color: alpha(@accent, 0.2);
+}
+
+#workspaces button.active label,
+#workspaces button.focused label {
+	color: @active-ws-fg;
+}
+
+#workspaces button.active,
+#workspaces button.focused {
+	border: none;
+	outline: none;
+	padding: 0 14px;
+	margin: 2px 3px;
+	border-radius: 12px;
+	background: linear-gradient(135deg, @active-ws-bg 0%, @accent 100%);
+	color: @active-ws-fg;
+	opacity: 1.0;
+	font-weight: 900;
+	box-shadow: 0 0 12px alpha(@active-ws-bg, 0.55);
+	transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Pill 2: Window Title */
+#window {
+	padding: 0 14px;
+	margin: 3px 4px;
+	background-color: @bg-1;
+	border-radius: 16px;
+	border: 1px solid alpha(@br, 0.25);
+}
+
+#window label {
+	font-weight: normal;
+}
+
+/* Items inside Center Pill (Pill 3) and Right Pill (Pill 4) */
+
+#keyboard-state label,
+#language,
+#temperature,
+#memory,
+#cpu,
+#idle_inhibitor,
+#clock.time,
+#clock.date,
+#network,
+#bluetooth,
+#custom-update,
+#mpris,
+#pulseaudio,
+#wireplumber,
+#backlight,
+#battery {
+	padding: 0 8px;
+	margin: 0px;
+	background-color: transparent;
+	color: @fg;
+	border: none;
+	border-radius: 10px;
+	transition: all 0.2s ease-in-out;
+}
+
+#temperature:hover,
+#memory:hover,
+#cpu:hover,
+#idle_inhibitor:hover,
+#clock.time:hover,
+#clock.date:hover,
+#network:hover,
+#bluetooth:hover,
+#custom-update:hover,
+#mpris:hover,
+#pulseaudio:hover,
+#wireplumber:hover,
+#backlight:hover,
+#battery:hover {
+	background-color: alpha(@accent, 0.2);
+	color: @accent;
+}
+
+#custom-distro {
+	padding: 0 8px;
+	margin: 0px;
+	background-color: transparent;
+	color: @accent;
+	border: none;
+	font-weight: bold;
+}
+
+#custom-power {
+	padding: 0 8px;
+	margin: 0px;
+	background-color: transparent;
+	color: @accent;
+	border: none;
+}
+
+/* Custom Theme Switcher inside Right Pill */
+#custom-theme {
+	padding: 0 10px;
+	margin: 2px 2px;
+	background: linear-gradient(135deg, alpha(@accent, 0.2), alpha(@accent, 0.05));
+	color: @accent;
+	font-weight: bold;
+	border-radius: 12px;
+	border: 1px solid alpha(@accent, 0.3);
+	transition: all 0.25s ease-in-out;
+}
+
+#custom-theme:hover {
+	background: @accent;
+	color: @bg-0;
+	border-color: @accent;
+	box-shadow: 0 0 10px alpha(@accent, 0.6);
+}

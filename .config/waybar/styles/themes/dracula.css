@@ -1,0 +1,32 @@
+/* Palette - Dracula */
+@define-color bg           #282a36;
+@define-color current_line #44475a;
+@define-color fg           #f8f8f2;
+@define-color cyan         #8be9fd;
+@define-color green        #50fa7b;
+@define-color orange       #ffb86c;
+@define-color pink         #ff79c6;
+@define-color purple       #bd93f9;
+@define-color red          #ff5555;
+@define-color yellow       #f1fa8c;
+
+/* Base colors */
+@define-color accent       @purple;
+@define-color fg           @fg;
+@define-color bg-0         @bg;
+@define-color bg-1         #343746;
+@define-color bg-2         @current_line;
+@define-color bg-3         #6272a4;
+@define-color br           #6272a4;
+@define-color shadow       rgba(0, 0, 0, 0.4);
+
+/* States */
+@define-color warning      @orange;
+@define-color critical     @red;
+@define-color charging     @green;
+@define-color hover-bg     @current_line;
+@define-color hover-fg     @pink;
+
+/* Active workspace pill */
+@define-color active-ws-bg #bd93f9;
+@define-color active-ws-fg #282a36;

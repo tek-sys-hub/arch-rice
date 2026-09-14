@@ -1,0 +1,96 @@
+[flavor]
+use = "catppuccin-mocha"
+
+# ── Manager ──────────────────────────────────────────────────────────────────
+[manager]
+cwd    = { fg = "#89b4fa" }
+
+# Hovered
+hovered         = { fg = "#1e1e2e", bg = "#cba6f7" }
+preview_hovered = { underline = true }
+
+# Find
+find_keyword  = { fg = "#f38ba8", bold = true, italic = true, underline = true }
+find_position = { fg = "#fab387", bg = "reset", bold = true, italic = true }
+
+# Marker
+marker_copied   = { fg = "#a6e3a1", bg = "#a6e3a1" }
+marker_cut      = { fg = "#f38ba8", bg = "#f38ba8" }
+marker_marked   = { fg = "#89b4fa", bg = "#89b4fa" }
+marker_selected = { fg = "#cba6f7", bg = "#cba6f7" }
+
+# Tab
+tab_active   = { fg = "#1e1e2e", bg = "#cba6f7" }
+tab_inactive = { fg = "#cdd6f4", bg = "#313244" }
+
+# Border
+border_symbol = "│"
+border_style  = { fg = "#6c7086" }
+
+# ── Status bar ───────────────────────────────────────────────────────────────
+[status]
+separator_open  = ""
+separator_close = ""
+separator_style = { fg = "#45475a", bg = "#45475a" }
+
+# Mode
+mode_normal = { fg = "#1e1e2e", bg = "#89b4fa", bold = true }
+mode_select = { fg = "#1e1e2e", bg = "#a6e3a1", bold = true }
+mode_unset  = { fg = "#1e1e2e", bg = "#f2cdcd", bold = true }
+
+# Progress
+progress_label  = { bold = true }
+progress_normal = { fg = "#89b4fa", bg = "#45475a" }
+progress_error  = { fg = "#f38ba8", bg = "#45475a" }
+
+# Permissions
+permissions_t = { fg = "#89b4fa" }
+permissions_r = { fg = "#a6e3a1" }
+permissions_w = { fg = "#f38ba8" }
+permissions_x = { fg = "#f9e2af" }
+permissions_s = { fg = "#6c7086" }
+
+# ── Input ────────────────────────────────────────────────────────────────────
+[input]
+border   = { fg = "#cba6f7" }
+title    = { fg = "#cba6f7" }
+value    = { fg = "#cdd6f4" }
+selected = { reversed = true }
+
+# ── Select ───────────────────────────────────────────────────────────────────
+[select]
+border   = { fg = "#cba6f7" }
+active   = { fg = "#f5c2e7" }
+inactive = { fg = "#6c7086" }
+
+# ── Tasks ────────────────────────────────────────────────────────────────────
+[tasks]
+border  = { fg = "#cba6f7" }
+title   = {}
+hovered = { underline = true }
+
+# ── Which ────────────────────────────────────────────────────────────────────
+[which]
+mask            = { bg = "#1e1e2e" }
+cand            = { fg = "#89b4fa" }
+rest            = { fg = "#6c7086" }
+desc            = { fg = "#cba6f7" }
+separator       = "  "
+separator_style = { fg = "#585b70" }
+
+# ── Help ─────────────────────────────────────────────────────────────────────
+[help]
+on      = { fg = "#cba6f7" }
+exec    = { fg = "#89b4fa" }
+desc    = { fg = "#cdd6f4" }
+hovered = { bg = "#313244", bold = true }
+footer  = { fg = "#1e1e2e", bg = "#cba6f7" }
+
+# ── Notify ───────────────────────────────────────────────────────────────────
+[notify]
+title_info  = { fg = "#a6e3a1" }
+title_warn  = { fg = "#f9e2af" }
+title_error = { fg = "#f38ba8" }
+icon_info   = ""
+icon_warn   = ""
+icon_error  = ""

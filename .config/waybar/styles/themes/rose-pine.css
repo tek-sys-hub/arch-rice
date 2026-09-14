@@ -1,0 +1,30 @@
+/* Palette - Rose Pine */
+@define-color base         #191724;
+@define-color surface      #1f1d2e;
+@define-color overlay      #26233a;
+@define-color text         #e0def4;
+@define-color rose         #ebbcba;
+@define-color pine         #31748f;
+@define-color gold         #f6c177;
+@define-color love         #eb6f92;
+
+/* Base colors */
+@define-color accent       @rose;
+@define-color fg           @text;
+@define-color bg-0         @base;
+@define-color bg-1         @surface;
+@define-color bg-2         @overlay;
+@define-color bg-3         #312c4a;
+@define-color br           #403d52;
+@define-color shadow       rgba(0, 0, 0, 0.4);
+
+/* States */
+@define-color warning      @gold;
+@define-color critical     @love;
+@define-color charging     @pine;
+@define-color hover-bg     @overlay;
+@define-color hover-fg     #ffffff;
+
+/* Active workspace pill */
+@define-color active-ws-bg #ebbcba;
+@define-color active-ws-fg #191724;

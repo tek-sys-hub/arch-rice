@@ -1,0 +1,8 @@
+{
+    "custom/theme": {
+        "format": "🎨 Style",
+        "on-click": "~/.config/waybar/scripts/theme-switcher.sh menu",
+        "on-click-right": "~/.config/waybar/scripts/theme-switcher.sh next",
+        "tooltip-format": "Left-click: Open Theme Switcher\nRight-click: Next Theme"
+    }
+}

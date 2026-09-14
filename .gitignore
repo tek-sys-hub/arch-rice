@@ -1,0 +1,18 @@
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Logs and runtime caches
+*.log
+.cache/
+/tmp/
+*.sock
+
+# Editor & OS files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
