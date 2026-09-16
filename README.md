@@ -28,17 +28,21 @@
 
 </div>
 
-## 🎬 Showcase & Desktop Demo
+## 📸 Preview & 🎬 Video Showcase
 
-<div align=center>
-  <video src="assets/arch-recording.mp4" controls="controls" muted="muted" poster="assets/preview.png" width="100%"></video>
-  <p>
-    <a href="https://raw.githubusercontent.com/tek-sys-hub/arch-rice/main/assets/arch-recording.mp4">
-      <img src="assets/preview.png" alt="Cherry Arch Hyprland Rice Desktop Demo" width="100%" />
-    </a>
-    <br />
-    <em>▶️ <b>Watch the full desktop demonstration:</b> Click image above or view <a href="assets/arch-recording.mp4">assets/arch-recording.mp4</a></em>
-  </p>
+<div align="center">
+
+### 📸 Desktop Preview
+<img src="assets/preview.png" alt="Cherry Arch Hyprland Rice Preview" width="100%" />
+
+<br /><br />
+
+### 🎬 Desktop Playthrough
+
+<video src="https://github.com/tek-sys-hub/arch-rice/raw/main/assets/arch-recording.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" controls="controls" width="100%"></video>
+
+https://github.com/tek-sys-hub/arch-rice/raw/main/assets/arch-recording.mp4
+
 </div>
 
 ---
