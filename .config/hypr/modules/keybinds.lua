@@ -32,6 +32,7 @@ hl.bind(mainMod .. " + T",           hl.dsp.exec_cmd("qs ipc call search toggle 
 hl.bind(mainMod .. " + D",           hl.dsp.exec_cmd("qs ipc call dashboard toggle"))               -- dashboard
 hl.bind(mainMod .. " + N",           hl.dsp.exec_cmd("qs ipc call controlcenter toggle"))           -- control center
 hl.bind(mainMod .. " + W",           hl.dsp.exec_cmd("qs ipc call search toggle wallpapers"))       -- wallpaper picker
+hl.bind(mainMod .. " + SHIFT + W",   hl.dsp.exec_cmd("qs ipc call search toggle livewallpapers"))   -- live wallpaper picker
 hl.bind(mainMod .. " + L",           hl.dsp.exec_cmd("qs ipc call cherry-lock trigger"))           -- lock screen
 hl.bind(mainMod .. " + SHIFT + L",   hl.dsp.exec_cmd("systemctl suspend"), { locked = true })       -- suspend directly
 hl.bind(mainMod .. " + SHIFT + V",   hl.dsp.exec_cmd("qs ipc call search toggle clipboard"))        -- clipboard manager

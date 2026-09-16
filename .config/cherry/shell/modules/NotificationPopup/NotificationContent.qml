@@ -63,12 +63,16 @@ Item {
                     if (content.hasAppIcon && content.currentNotif) {
                         const icon = content.currentNotif.nAppIcon ?? "";
                         if (icon === "") return "";
+                        if (icon.endsWith(".mp4") || icon.endsWith(".webm") || icon.endsWith(".mkv")) return "";
                         if (icon.startsWith("/") || icon.startsWith("file://") || icon.startsWith("image://"))
                             return icon;
                         return DesktopEntryService.resolveIconPath(icon);
                     }
-                    if (content.hasImage && content.currentNotif)
-                        return content.currentNotif.nImage ?? "";
+                    if (content.hasImage && content.currentNotif) {
+                        const img = content.currentNotif.nImage ?? "";
+                        if (img.endsWith(".mp4") || img.endsWith(".webm") || img.endsWith(".mkv")) return "";
+                        return img;
+                    }
                     return "";
                 }
 

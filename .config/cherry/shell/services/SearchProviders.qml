@@ -473,6 +473,14 @@ Singleton {
             component: null // set from CentralLauncher.qml, same as apps/colors
         },
         {
+            id: "livewallpapers",
+            keyword: "@live",
+            label: "Live Wallpapers",
+            icon: "film",
+            pushOnActivate: false,
+            component: null
+        },
+        {
             id: "colors",
             keyword: "@color",
             label: "Color Themes",
@@ -700,7 +708,7 @@ Singleton {
 
         const spaceIdx = text.indexOf(" ");
         const firstWord = spaceIdx === -1 ? text : text.substring(0, spaceIdx);
-        const provider = root.keywordProviders.find(p => p.keyword === firstWord);
+        const provider = root.keywordProviders.find(p => p.keyword === firstWord || (p.id === "livewallpapers" && firstWord === "@lwp"));
 
         if (provider) {
             return {

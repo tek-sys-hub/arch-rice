@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Qt5Compat.GraphicalEffects
+import Quickshell
 import qs.core
 
 GlassCard {
@@ -75,7 +76,14 @@ GlassCard {
                 anchors.fill: parent
                 anchors.margins: 4 * card.uiScale
                 fillMode: Image.PreserveAspectFit
-                source: notif.nAppIcon || notif.nImage || ""
+                source: {
+                    const raw = notif.nAppIcon || notif.nImage || "";
+                    if (raw === "") return "";
+                    if (raw.endsWith(".mp4") || raw.endsWith(".webm") || raw.endsWith(".mkv")) return "";
+                    if (raw.startsWith("/") || raw.startsWith("file://") || raw.startsWith("image://"))
+                        return raw.startsWith("/") ? ("file://" + raw) : raw;
+                    return Quickshell.iconPath(raw);
+                }
                 asynchronous: true
                 cache: true
                 visible: false

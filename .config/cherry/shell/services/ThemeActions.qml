@@ -20,12 +20,14 @@ Singleton {
     id: root
 
     property var wallpapers: []
+    property var liveWallpapers: []
     property var themes: []
 
     // ── Signals ──────────────────────────────────────────────────
     signal wallpaperSet(bool success, string path)
     signal themeSet(bool success, string name)
     signal wallpapersLoaded(var list)
+    signal liveWallpapersLoaded(var list)
     signal themesLoaded(var list)
     signal settingUpdated(bool success, string key, string scope)
     signal chromaSettingUpdated(bool success, string key, var value, bool reapplied)
@@ -47,6 +49,10 @@ Singleton {
         case "wallpapers_list":
             root.wallpapers = payload.wallpapers ?? [];
             root.wallpapersLoaded(root.wallpapers);
+            break;
+        case "live_wallpapers_list":
+            root.liveWallpapers = payload.wallpapers ?? [];
+            root.liveWallpapersLoaded(root.liveWallpapers);
             break;
         case "themes_list":
             root.themes = payload.themes ?? [];
@@ -122,6 +128,10 @@ Singleton {
     // not part of state.json, so ThemeState can't give them) ────
     function fetchWallpapers() {
         SocketService.sendCommand("theme", "get_wallpapers", {});
+    }
+
+    function fetchLiveWallpapers() {
+        SocketService.sendCommand("theme", "get_live_wallpapers", {});
     }
 
     function fetchThemes() {

@@ -1,3 +1,4 @@
+import os
 """
 DesktopIntegration  -  everything that reaches out and pokes the running
 desktop: setting the wallpaper via awww, recoloring Papirus folders,
@@ -16,13 +17,41 @@ logger = logging.getLogger(__name__)
 
 
 class DesktopIntegration:
+    @staticmethod
+    def is_video(path: str) -> bool:
+        return Path(path).suffix.lower() in {".mp4", ".mkv", ".webm", ".mov", ".avi"}
+
+    def stop_live_wallpaper(self) -> None:
+        try:
+            subprocess.run(["pkill", "-9", "-x", "mpvpaper"], check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        except Exception as e:
+            logger.warning("Error stopping mpvpaper: %s", e)
+
     def apply_wallpaper(self, path: str) -> None:
-        subprocess.run(
-            ["awww", "img", path, "--transition-type", "center"], check=False
-        )
+        if self.is_video(path):
+            self.stop_live_wallpaper()
+            try:
+                subprocess.Popen(
+                    ["mpvpaper", "-p", "-o", "no-audio loop --no-config --hwdec=auto", "*", path],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    start_new_session=True,
+                )
+                logger.info("Live wallpaper applied via mpvpaper: %s", path)
+            except Exception as e:
+                logger.error("Failed to start mpvpaper for %s: %s", path, e)
+        else:
+            self.stop_live_wallpaper()
+            subprocess.run(
+                ["awww", "img", path, "--transition-type", "center"], check=False
+            )
 
     def preview_wallpaper(self, path: str) -> None:
-        subprocess.run(["awww", "img", path, "--transition-type", "none"], check=False)
+        if self.is_video(path):
+            self.apply_wallpaper(path)
+        else:
+            self.stop_live_wallpaper()
+            subprocess.run(["awww", "img", path, "--transition-type", "none"], check=False)
 
     def sync_papirus_folders(self, accent_hex: str) -> None:
         """
@@ -111,6 +140,17 @@ class DesktopIntegration:
             papirus_theme = (
                 active_icon_theme if "apirus" in active_icon_theme else "Papirus"
             )
+
+            # Check if Papirus theme directory is writable by user (avoid sudo prompt hang in daemon)
+            user_theme_dir = Path.home() / ".local/share/icons" / papirus_theme
+            sys_theme_dir = Path("/usr/share/icons") / papirus_theme
+            target_theme_dir = user_theme_dir if user_theme_dir.exists() else sys_theme_dir
+            if not os.access(target_theme_dir, os.W_OK):
+                logger.debug(
+                    "Papirus theme dir %s not writable by user; skipping papirus-folders to avoid sudo hang",
+                    target_theme_dir,
+                )
+                return
 
             # Run and wait so icon cache is updated before GTK reload
             subprocess.run(

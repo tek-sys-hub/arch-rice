@@ -313,6 +313,9 @@ Singleton {
     function openWallpapers(screenName) {
         openDashboardSearch(screenName, "wallpapers");
     }
+    function openLiveWallpapers(screenName) {
+        openDashboardSearch(screenName, "livewallpapers");
+    }
     function openColors(screenName) {
         openDashboardSearch(screenName, "colors");
     }
@@ -348,6 +351,9 @@ Singleton {
     }
     function toggleWallpapers(screenName) {
         toggleDashboardSearch(screenName, "wallpapers");
+    }
+    function toggleLiveWallpapers(screenName) {
+        toggleDashboardSearch(screenName, "livewallpapers");
     }
     function toggleColors(screenName) {
         toggleDashboardSearch(screenName, "colors");

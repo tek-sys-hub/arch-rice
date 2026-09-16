@@ -66,7 +66,8 @@ All previous imprints and outdated references have been sanitized and cleanly un
 | **Shell** | [Fish](https://fishshell.com) | Interactive user shell with custom aliases |
 | **App Launcher** | Quickshell / [Rofi](https://github.com/davatorium/rofi) | Fuzzy app launcher and menu provider |
 | **Idle & Lock** | [hypridle](https://github.com/hyprwm/hypridle) + Cherry Lock | Screen timeout and session security |
-| **Wallpaper Engine** | [awww](https://github.com/phisch/awww) | High-performance Wayland wallpaper daemon |
+| **Wallpaper Engine** | [awww](https://github.com/phisch/awww) & [mpvpaper](https://github.com/GhostNaN/mpvpaper) | Static wallpaper daemon & hardware-accelerated live video wallpaper engine |
+| **Media Processing** | [ffmpeg](https://ffmpeg.org) & mpv | Video frame thumbnail extraction & hardware decode |
 | **File Manager** | [Thunar](https://docs.xfce.org/xfce/thunar/start) & [Yazi](https://github.com/sxyazi/yazi) | GUI & Terminal file managers |
 | **System Monitors** | [Fastfetch](https://github.com/fastfetch-cli/fastfetch), [btop](https://github.com/aristocratos/btop), [bpytop](https://github.com/aristocratos/bpytop) | Hardware & resource usage monitors |
 | **Audio Visualizer** | [Cava](https://github.com/karlstav/cava) | Terminal-based audio spectrum visualizer |
@@ -89,6 +90,7 @@ The `SUPER` key is typically the `Windows` or `Command` key.
 | `SUPER + D` | Toggle Desktop Dashboard |
 | `SUPER + N` | Toggle Control Center |
 | `SUPER + W` | Toggle Wallpaper Selector |
+| `SUPER + SHIFT + W` | Toggle Live Wallpaper Selector |
 | `SUPER + T` | Toggle Dynamic Theme Selector |
 | `SUPER + L` | Lock Screen (**Cherry Lock**) |
 | `SUPER + SHIFT + L`| Suspend system |
@@ -185,11 +187,18 @@ arch-rice/
 ## 🎨 Changing Themes & Wallpapers
 
 - **Change Theme On The Fly**: Press `SUPER + T` to open the interactive theme switcher. Select from 50+ color themes or let the daemon dynamically match your wallpaper!
-- **Change Wallpaper**: Press `SUPER + W` to launch the wallpaper picker, or add your favorite pictures into `~/Pictures/Wallpapers/`.
-- **Manual Wallpaper Set via CLI**:
-  ```bash
-  awww img ~/Pictures/Wallpapers/1407460.png
-  ```
+- **Change Static Wallpaper**: Press `SUPER + W` to launch the wallpaper picker, or place pictures in `~/Pictures/Wallpapers/`.
+- **Change Live Wallpaper**: Press `SUPER + SHIFT + W` to launch the interactive live wallpaper selector, or place video files (`.mp4`, `.webm`, `.mkv`) into `~/Videos/LiveWallpapers/` or `~/Pictures/Wallpapers/`.
+- **Live Wallpaper Performance & Recommended Format**:
+  - Resolution: 1080p (1920x1080) or match your native display resolution.
+  - Framerate: 30 fps or 60 fps (avoid unnecessarily high 120fps+ video loops for battery and GPU efficiency).
+  - Video Codec: H.264 (AVC) or HEVC (H.265) without audio tracks (`-an`).
+  - Optimize your videos easily using ffmpeg:
+    ```bash
+    ffmpeg -i input.mp4 -vf scale=1920:-2 -r 30 -c:v libx264 -crf 22 -preset slow -an output.mp4
+    ```
+- **Automatic Light / Dark Theming**:
+  - In the Wallpaper Switcher, choose between **Auto**, **Light**, or **Dark** mode. In **Auto** mode, the system calculates average perceived luminance and automatically switches your desktop to Light or Dark mode while tinting background surfaces with your wallpaper's primary accent!
 
 ---
 

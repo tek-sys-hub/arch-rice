@@ -174,6 +174,10 @@ install_packages() {
         dunst
         wlogout
 
+        # Media & Live Wallpaper
+        ffmpeg
+        mpv
+
         # Python Backend Daemon Dependencies
         python
         python-pillow
@@ -197,6 +201,7 @@ install_packages() {
     AUR_PKGS=(
         quickshell-git
         awww
+        mpvpaper
     )
 
     log_info "Installing official repository packages via pacman..."

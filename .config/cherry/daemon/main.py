@@ -2,6 +2,16 @@ import asyncio
 import json
 import logging
 import signal
+import subprocess
+import atexit
+
+def _cleanup_processes() -> None:
+    try:
+        subprocess.run(["pkill", "-9", "-x", "mpvpaper"], check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except Exception:
+        pass
+
+atexit.register(_cleanup_processes)
 
 from services.socket_manager import DevShellSocket
 from modules import (
@@ -101,6 +111,7 @@ async def main() -> None:
             task.cancel()
 
     logger.info("Daemon stopped.")
+    _cleanup_processes()
 
 
 if __name__ == "__main__":

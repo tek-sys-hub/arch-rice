@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Qt5Compat.GraphicalEffects
+import QtMultimedia
 import qs.core
 import qs.services
 
@@ -26,7 +27,7 @@ Item {
     property string previewPath: ""
     property bool loading: true
 
-    readonly property var filteredWallpapers: root.searchText === "" ? ThemeActions.wallpapers : ThemeActions.wallpapers.filter(w => w.name.toLowerCase().includes(root.searchText.toLowerCase()))
+    readonly property var filteredWallpapers: root.searchText === "" ? ThemeActions.liveWallpapers : ThemeActions.liveWallpapers.filter(w => w.name.toLowerCase().includes(root.searchText.toLowerCase()))
 
     function navigate(delta) {
         wallpaperList.keyboardNavigating = true;
@@ -46,7 +47,7 @@ Item {
     }
 
     Component.onCompleted: {
-        ThemeActions.fetchWallpapers();
+        ThemeActions.fetchLiveWallpapers();
     }
     Component.onDestruction: {
         if (root.confirmedPath !== "")
@@ -55,14 +56,14 @@ Item {
 
     Connections {
         target: ThemeActions
-        function onWallpapersLoaded() {
+        function onLiveWallpapersLoaded() {
             root.loading = false;
         }
     }
 
     Timer {
         id: previewTimer
-        interval: 250
+        interval: 350
         onTriggered: {
             if (root.previewPath !== "")
                 ThemeActions.previewWallpaper(root.previewPath);
@@ -88,16 +89,35 @@ Item {
         RowLayout {
             id: headerRow
             Layout.fillWidth: true
-            spacing: 10 * root.uiScale
+            spacing: 12 * root.uiScale
 
             Column {
                 spacing: 2 * root.uiScale
-                Text {
-                    text: "Wallpapers"
-                    color: Theme.foreground
-                    font.family: Theme.fontName
-                    font.pixelSize: 14 * root.uiScale
-                    font.bold: true
+                Row {
+                    spacing: 6 * root.uiScale
+                    Text {
+                        text: "Live Wallpapers"
+                        color: Theme.foreground
+                        font.family: Theme.fontName
+                        font.pixelSize: 14 * root.uiScale
+                        font.bold: true
+                    }
+                    Rectangle {
+                        width: 38 * root.uiScale
+                        height: 16 * root.uiScale
+                        radius: 4 * root.uiScale
+                        color: Qt.rgba(0.9, 0.2, 0.3, 0.2)
+                        border.width: 1
+                        border.color: Qt.rgba(0.9, 0.2, 0.3, 0.5)
+                        anchors.verticalCenter: parent.verticalCenter
+                        Text {
+                            anchors.centerIn: parent
+                            text: "LIVE"
+                            color: "#ff5252"
+                            font.pixelSize: 9 * root.uiScale
+                            font.bold: true
+                        }
+                    }
                 }
                 Text {
                     text: root.loading ? "Loading..." : root.filteredWallpapers.length + " found"
@@ -126,16 +146,23 @@ Item {
                         height: 22 * root.uiScale
                         width: staticTxt.implicitWidth + 16 * root.uiScale
                         radius: 11 * root.uiScale
-                        color: Theme.selected
+                        color: "transparent"
 
                         Text {
                             id: staticTxt
                             anchors.centerIn: parent
                             text: "Static"
-                            color: "white"
+                            color: Theme.foreground
                             font.family: Theme.fontName
                             font.pixelSize: 10 * root.uiScale
-                            font.bold: true
+                            opacity: staticMa.containsMouse ? 0.9 : 0.6
+                        }
+                        MouseArea {
+                            id: staticMa
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: ShellState.openWallpapers(ShellState.activeScreenName)
                         }
                     }
 
@@ -143,23 +170,16 @@ Item {
                         height: 22 * root.uiScale
                         width: liveTxt.implicitWidth + 16 * root.uiScale
                         radius: 11 * root.uiScale
-                        color: "transparent"
+                        color: Theme.selected
 
                         Text {
                             id: liveTxt
                             anchors.centerIn: parent
                             text: "Live"
-                            color: Theme.foreground
+                            color: "white"
                             font.family: Theme.fontName
                             font.pixelSize: 10 * root.uiScale
-                            opacity: liveMa.containsMouse ? 0.9 : 0.6
-                        }
-                        MouseArea {
-                            id: liveMa
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: ShellState.openLiveWallpapers(ShellState.activeScreenName)
+                            font.bold: true
                         }
                     }
                 }
@@ -295,7 +315,7 @@ Item {
             opacity: 0.4
         }
 
-        // ── Wallpaper List ────────────────────────────────────────
+        // ── Live Wallpaper List ──────────────────────────────────
         ListView {
             id: wallpaperList
             Layout.fillWidth: true
@@ -346,6 +366,7 @@ Item {
                 id: delegateItem
 
                 property string itemPath: modelData.path
+                property string itemThumbnail: modelData.thumbnail
                 property bool isHovered: mouseArea.containsMouse
                 property bool isCurrent: wallpaperList.currentIndex === index
                 property bool isConfirmed: Colors.wallpaper === itemPath
@@ -369,11 +390,12 @@ Item {
                         }
                     }
 
+                    // Static thumbnail (always loaded first)
                     Image {
                         id: sourceImage
                         anchors.fill: parent
                         anchors.margins: card.border.width
-                        source: "file://" + modelData.path
+                        source: itemThumbnail ? ("file://" + itemThumbnail) : ""
                         fillMode: Image.PreserveAspectCrop
                         asynchronous: true
                         cache: true
@@ -394,10 +416,58 @@ Item {
                         anchors.fill: sourceImage
                         source: sourceImage
                         maskSource: imgMask
-                        scale: (isHovered || isCurrent) ? 1.10 : 1.0
+                        scale: (isHovered || isCurrent) ? 1.06 : 1.0
                         Behavior on scale {
                             Anim {
                                 type: Anim.FastToggle
+                            }
+                        }
+                    }
+
+                    // In-card Live Video Preview (triggered on hover/focus)
+                    Item {
+                        id: videoContainer
+                        anchors.fill: sourceImage
+                        visible: isHovered || isCurrent
+                        opacity: visible ? 1.0 : 0.0
+                        Behavior on opacity {
+                            Anim {
+                                type: Anim.FastEffects
+                            }
+                        }
+
+                        MediaPlayer {
+                            id: inCardPlayer
+                            source: (isHovered || isCurrent) ? ("file://" + delegateItem.itemPath) : ""
+                            loops: MediaPlayer.Infinite
+                            audioOutput: null
+                            Component.onCompleted: {
+                                if (isHovered || isCurrent)
+                                    inCardPlayer.play();
+                            }
+                        }
+
+                        VideoOutput {
+                            id: inCardOutput
+                            anchors.fill: parent
+                            fillMode: VideoOutput.PreserveAspectCrop
+                        }
+
+                        Connections {
+                            target: delegateItem
+                            function onIsHoveredChanged() {
+                                if (delegateItem.isHovered || delegateItem.isCurrent) {
+                                    inCardPlayer.play();
+                                } else {
+                                    inCardPlayer.stop();
+                                }
+                            }
+                            function onIsCurrentChanged() {
+                                if (delegateItem.isHovered || delegateItem.isCurrent) {
+                                    inCardPlayer.play();
+                                } else {
+                                    inCardPlayer.stop();
+                                }
                             }
                         }
                     }
@@ -414,6 +484,41 @@ Item {
                         }
                     }
 
+                    // Top-left LIVE badge
+                    Rectangle {
+                        anchors.top: parent.top
+                        anchors.left: parent.left
+                        anchors.topMargin: 8 * root.uiScale
+                        anchors.leftMargin: 8 * root.uiScale
+                        height: 18 * root.uiScale
+                        width: badgeRow.implicitWidth + 10 * root.uiScale
+                        radius: height / 2
+                        color: Qt.rgba(0, 0, 0, 0.7)
+                        border.width: 1
+                        border.color: Qt.rgba(1, 0.3, 0.3, 0.6)
+
+                        Row {
+                            id: badgeRow
+                            anchors.centerIn: parent
+                            spacing: 4 * root.uiScale
+                            Rectangle {
+                                width: 6 * root.uiScale
+                                height: 6 * root.uiScale
+                                radius: 3 * root.uiScale
+                                color: "#ff4d4f"
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+                            Text {
+                                text: "LIVE"
+                                color: "#ff4d4f"
+                                font.bold: true
+                                font.pixelSize: 8 * root.uiScale
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+                        }
+                    }
+
+                    // Top-right confirmation badge
                     Rectangle {
                         visible: isConfirmed
                         anchors.top: parent.top
@@ -434,12 +539,13 @@ Item {
                         }
                     }
 
+                    // Bottom name banner
                     Rectangle {
                         anchors.bottom: parent.bottom
                         anchors.left: parent.left
                         anchors.right: parent.right
                         height: 28 * root.uiScale
-                        color: Qt.rgba(0, 0, 0, 0.6)
+                        color: Qt.rgba(0, 0, 0, 0.7)
                         radius: Theme.radius
                         visible: isHovered || isCurrent
 
@@ -486,7 +592,7 @@ Item {
     Text {
         anchors.centerIn: parent
         visible: root.filteredWallpapers.length === 0
-        text: root.loading ? "Loading wallpapers..." : (root.searchText !== "" ? "No matching wallpapers" : "No wallpapers found in\n~/Pictures/Wallpapers")
+        text: root.loading ? "Loading live wallpapers..." : (root.searchText !== "" ? "No matching live wallpapers" : "No live wallpapers found in\n~/Pictures/Wallpapers or ~/Pictures/LiveWallpapers\n(Supports .mp4, .webm, .mkv)")
         color: Theme.foreground
         font.family: Theme.fontName
         font.pixelSize: 13 * root.uiScale

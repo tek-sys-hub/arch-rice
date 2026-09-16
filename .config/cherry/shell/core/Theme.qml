@@ -76,6 +76,7 @@ QtObject {
 
     // ── Metadata → from Colors.qml ──────────────────────────────────
     property string wallpaper: Colors.wallpaper
+    readonly property bool isLiveWallpaper: wallpaper.endsWith(".mp4") || wallpaper.endsWith(".webm") || wallpaper.endsWith(".mkv") || wallpaper.endsWith(".mov") || wallpaper.endsWith(".avi")
     property string mode: Colors.mode
     property string sourceType: Colors.sourceType
     property string sourceName: Colors.sourceName

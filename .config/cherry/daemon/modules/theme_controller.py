@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 # Module-level singleton  -  created once when the module loads
 theme_manager = ThemeManager()
 
-_VALID_MODES = {"dark", "light"}
+_VALID_MODES = {"dark", "light", "auto"}
 _VALID_SCOPES = {"shared", "shell", "hyprland"}
 
 
@@ -127,6 +127,15 @@ async def handle_command(action: str, payload: dict, sock) -> None:
                 await sock.send(
                     {
                         "type": "wallpapers_list",
+                        "payload": {"wallpapers": wallpapers},
+                    }
+                )
+
+            case "get_live_wallpapers":
+                wallpapers = await asyncio.to_thread(theme_manager.get_live_wallpapers)
+                await sock.send(
+                    {
+                        "type": "live_wallpapers_list",
                         "payload": {"wallpapers": wallpapers},
                     }
                 )

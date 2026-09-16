@@ -12,6 +12,7 @@ It doesn't do any of steps 1-4 itself anymore. See:
 
 import hashlib
 import logging
+import subprocess
 import threading
 from pathlib import Path
 
@@ -25,6 +26,7 @@ from .template_renderer import TemplateRenderer
 logger = logging.getLogger(__name__)
 
 _IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
+_VIDEO_EXTENSIONS = {".mp4", ".mkv", ".webm", ".mov", ".avi"}
 
 # Seeded into state.json on first daemon startup (see
 # StateManager.seed_defaults) so these exist as real, editable values
@@ -169,6 +171,19 @@ class ThemeManager:
     def preview_wallpaper(self, wallpaper_path: str) -> None:
         self.desktop.preview_wallpaper(wallpaper_path)
 
+    @staticmethod
+    def detect_wallpaper_mode(image_path: str) -> str:
+        try:
+            from PIL import Image
+            import numpy as np
+            img = Image.open(image_path).convert("L")
+            img.thumbnail((100, 100))
+            lum = float(np.array(img).mean() / 255.0)
+            return "light" if lum > 0.52 else "dark"
+        except Exception as e:
+            logger.warning("Auto mode detection failed for %s: %s", image_path, e)
+            return "dark"
+
     def set_wallpaper(
         self, wallpaper_path: str, apply_colors: bool, mode: str = "dark"
     ) -> bool:
@@ -202,6 +217,59 @@ class ThemeManager:
         state = self.state.load()
         wallpaper = state.wallpaper if state else ""
         return self._apply_colors(raw, mode, wallpaper, "static", theme_name)
+
+    def _get_or_create_thumbnail(self, video_path: Path) -> Path:
+        thumb_dir = self.config.cache_dir / "thumbnails"
+        thumb_dir.mkdir(parents=True, exist_ok=True)
+        video_str = str(video_path.resolve())
+        file_hash = hashlib.md5(video_str.encode()).hexdigest()[:12]
+        thumb_path = thumb_dir / f"{video_path.stem}_{file_hash}.jpg"
+        if not thumb_path.exists() or thumb_path.stat().st_mtime < video_path.stat().st_mtime:
+            try:
+                subprocess.run(
+                    [
+                        "ffmpeg", "-y",
+                        "-ss", "00:00:01",
+                        "-i", str(video_path),
+                        "-frames:v", "1",
+                        "-update", "1",
+                        "-q:v", "2",
+                        str(thumb_path),
+                    ],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    check=False,
+                    timeout=10,
+                )
+            except Exception as e:
+                logger.warning("Thumbnail generation failed for %s: %s", video_path, e)
+        return thumb_path if thumb_path.exists() else video_path
+
+    def get_live_wallpapers(self) -> list[dict]:
+        search_dirs = [
+            self.config.wallpapers_dir,
+            Path("~/Pictures/LiveWallpapers").expanduser(),
+            Path("~/Videos/Wallpapers").expanduser(),
+        ]
+        seen_paths: set[str] = set()
+        results: list[dict] = []
+        for d in search_dirs:
+            if not d.exists():
+                continue
+            for p in sorted(d.iterdir()):
+                if p.is_file() and p.suffix.lower() in _VIDEO_EXTENSIONS:
+                    resolved = str(p.resolve())
+                    if resolved in seen_paths:
+                        continue
+                    seen_paths.add(resolved)
+                    thumb = self._get_or_create_thumbnail(p)
+                    results.append({
+                        "name": p.stem,
+                        "path": str(p),
+                        "thumbnail": str(thumb),
+                        "is_live": True,
+                    })
+        return results
 
     def get_wallpapers(self) -> list[dict]:
         d = self.config.wallpapers_dir

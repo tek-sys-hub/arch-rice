@@ -68,7 +68,14 @@ Singleton {
         if (root._pathCache.hasOwnProperty(key)) {
             return root._pathCache[key];
         }
-        const path = Quickshell.iconPath(key);
+        let path = "";
+        if (key.startsWith("/") || key.startsWith("file://")) {
+            path = key.startsWith("file://") ? key : "file://" + key;
+        } else if (key.startsWith("image://")) {
+            path = key;
+        } else {
+            path = Quickshell.iconPath(key);
+        }
         // Mutate in place  -  same reasoning as _cache above, avoids a
         // binding-loop risk if this is ever called from inside a
         // property binding.

@@ -454,37 +454,46 @@ def generate_16_palette(
         palette[f"color{i}"] = adjust(col, 1.0)
         palette[f"color{i+8}"] = adjust(col, 1.25 if not light_mode else 0.8)
 
-    palette["color7"] = fg
-    palette["color15"] = set_saturation(
-        adjust(fg, 1.1 if not light_mode else 0.9), bg_saturation
-    )
+    # ── 1. Accent: the most vivid (highest-saturation/pop) color from wallpaper ──
+    by_saturation = sorted(accents, key=saturation_of, reverse=True)
+    accent_cand = adjust(by_saturation[0], 1.0) if by_saturation else (200, 100, 100)
+    by_pop = sorted(accents, key=pop_score, reverse=True)
+    if by_pop:
+        accent_cand = adjust(by_pop[0], 1.0)
+    palette["accent"] = accent_cand
 
-    # background/foreground/cursor helpers (same idea as pywal)
+    # ── 2. Color-adaptive background & foreground shaped by accent hue ──────────
+    ar, ag, ab = [x / 255.0 for x in accent_cand]
+    ah, _, asat = colorsys.rgb_to_hls(ar, ag, ab)
+
+    if light_mode:
+        # Crisp, bright white background with a subtle, luminous tint of the wallpaper
+        bg_rgb = colorsys.hls_to_rgb(ah, 0.96, min(asat * 0.15, 0.08))
+        bg_alt_rgb = colorsys.hls_to_rgb(ah, 0.91, min(asat * 0.22, 0.12))
+        fg_rgb = colorsys.hls_to_rgb(ah, 0.12, min(asat * 0.25, 0.15))
+        fg_alt_rgb = colorsys.hls_to_rgb(ah, 0.38, min(asat * 0.20, 0.12))
+    else:
+        # Deep, rich dark background with an unmistakable tint of the wallpaper color (red, blue, etc.)
+        bg_rgb = colorsys.hls_to_rgb(ah, 0.08, min(asat * 0.65, 0.40))
+        bg_alt_rgb = colorsys.hls_to_rgb(ah, 0.13, min(asat * 0.55, 0.35))
+        fg_rgb = colorsys.hls_to_rgb(ah, 0.92, min(asat * 0.15, 0.12))
+        fg_alt_rgb = colorsys.hls_to_rgb(ah, 0.68, min(asat * 0.25, 0.20))
+
+    bg = tuple(int(x * 255) for x in bg_rgb)
+    bg_alt = tuple(int(x * 255) for x in bg_alt_rgb)
+    fg = tuple(int(x * 255) for x in fg_rgb)
+    fg_alt = tuple(int(x * 255) for x in fg_alt_rgb)
+
+    palette["color0"] = bg
+    palette["color7"] = fg
+    palette["color8"] = bg_alt
+    palette["color15"] = fg
+
     palette["background"] = bg
     palette["foreground"] = fg
     palette["cursor"] = fg
-
-    # backgroundAlt / foregroundAlt: secondary shades shifted
-    # slightly toward the middle  -  useful for alt panels/statusline
-    # segments (backgroundAlt) and dimmed/muted text like comments
-    # (foregroundAlt), without matching color8/color7 exactly.
-    if light_mode:
-        palette["backgroundAlt"] = set_saturation(adjust(bg, 0.85), bg_saturation)
-        palette["foregroundAlt"] = set_saturation(adjust(fg, 1.3), bg_saturation)
-    else:
-        palette["backgroundAlt"] = set_saturation(adjust(bg, 1.8), bg_saturation)
-        palette["foregroundAlt"] = set_saturation(adjust(fg, 0.7), bg_saturation)
-
-    # accent: the single most vivid (highest-saturation) accent color.
-    # Was accent1..accent4  -  trimmed to just one on request (this is
-    # what becomes the shell's "selected" color, wired up separately).
-    by_saturation = sorted(accents, key=saturation_of, reverse=True)
-    if by_saturation:
-        palette["accent"] = adjust(by_saturation[0], 1.0)
-
-    by_pop = sorted(accents, key=pop_score, reverse=True)
-    if by_pop:
-        palette["accent"] = adjust(by_pop[0], 1.0)
+    palette["backgroundAlt"] = bg_alt
+    palette["foregroundAlt"] = fg_alt
 
     return palette
 

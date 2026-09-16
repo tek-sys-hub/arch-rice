@@ -21,6 +21,7 @@ hl.on("hyprland.start", function()
     -- (cached under ~/.cache/awww) as soon as a monitor connects  - 
     -- starting awww-daemon is the only step needed.
     hl.exec_cmd("awww-daemon")
+    hl.exec_cmd("~/.config/hypr/scripts/restore_wallpaper.sh")
 
     -- ── Clipboard history  -  separate text/image watchers ──────────────────────────────
     hl.exec_cmd("wl-paste --type text --watch cliphist store")

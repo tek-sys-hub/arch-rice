@@ -89,6 +89,7 @@ Item {
     readonly property var _componentMap: ({
             "apps": appsComponent,
             "wallpapers": wallpapersComponent,
+            "livewallpapers": liveWallpapersComponent,
             "colors": colorsComponent,
             "clipboard": clipboardComponent,
             "files": filesComponent,
@@ -127,6 +128,13 @@ Item {
     Component {
         id: wallpapersComponent
         WallpapersPanel {
+            searchText: root.providerQuery
+            uiScale: root.uiScale
+        }
+    }
+    Component {
+        id: liveWallpapersComponent
+        LiveWallpapersPanel {
             searchText: root.providerQuery
             uiScale: root.uiScale
         }

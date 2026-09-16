@@ -1,49 +1,82 @@
 pragma Singleton
 import QtQuick
 import Quickshell
-
 import Quickshell.Io
 
 Singleton {
     id: root
 
-    // ── Socket ───────────────────────────────────────────────────
-    property Socket clientSocket: Socket {
-        id: clientSocketId
-        connected: true
-        path: "/tmp/cherry-shell.sock"
+    readonly property bool isConnected: socketLoader.item ? socketLoader.item.connected : false
+    readonly property Socket clientSocket: socketLoader.item
 
-        parser: SplitParser {
-            onRead: message => {
-                try {
-                    let data = JSON.parse(message);
-                    root.messageReceived(data.type, data.payload);
-                } catch (e) {
-                    console.warn("SocketService: JSON parse error:", e);
+    Loader {
+        id: socketLoader
+        active: true
+        sourceComponent: Component {
+            Socket {
+                id: innerSocket
+                connected: true
+                path: "/tmp/cherry-shell.sock"
+
+                parser: SplitParser {
+                    onRead: message => {
+                        try {
+                            let data = JSON.parse(message);
+                            root.messageReceived(data.type, data.payload);
+                        } catch (e) {
+                            console.warn("SocketService: JSON parse error:", e);
+                        }
+                    }
                 }
-            }
-        }
 
-        onConnectedChanged: {
-            if (!connected) {
-                console.log("SocketService: Lost connection to daemon, retrying...");
-                reconnectTimer.start();
-            } else {
-                console.log("SocketService: Connected to Cherry Daemon");
-                reconnectTimer.stop();
-                root.connected();
+                onError: (err) => {
+                    console.warn("SocketService: Socket error:", err);
+                    root.scheduleReconnect();
+                }
+
+                onConnectionStateChanged: {
+                    if (!connected) {
+                        console.log("SocketService: Lost connection to daemon, retrying...");
+                        root.scheduleReconnect();
+                    } else {
+                        console.log("SocketService: Connected to Cherry Daemon");
+                        reconnectTimer.stop();
+                        root.connected();
+                    }
+                }
             }
         }
     }
 
-    // ── Auto-reconnect ───────────────────────────────────────────
-    property Timer reconnectTimer: Timer {
+    function scheduleReconnect() {
+        if (!reconnectTimer.running) {
+            reconnectTimer.start();
+        }
+    }
+
+    // ── Reconnect logic ──────────────────────────────────────────
+    Timer {
+        id: reconnectTimer
         interval: 1000
         repeat: true
         running: false
         onTriggered: {
-            if (!clientSocketId.connected)
-                clientSocketId.connected = true;
+            if (!root.isConnected) {
+                // Re-create the Socket QObject to clear any stuck QLocalSocket C++ state
+                socketLoader.active = false;
+                recreateTimer.restart();
+            } else {
+                stop();
+            }
+        }
+    }
+
+    Timer {
+        id: recreateTimer
+        interval: 80
+        repeat: false
+        onTriggered: {
+            socketLoader.active = true;
         }
     }
 
@@ -53,16 +86,17 @@ Singleton {
 
     // ── API ──────────────────────────────────────────────────────
     function sendCommand(module, action, payload) {
-        if (!clientSocketId.connected) {
-            console.warn("SocketService: Cannot send  -  not connected");
+        if (!root.isConnected || !socketLoader.item) {
+            console.warn("SocketService: Cannot send — not connected");
             return;
         }
         let msg = JSON.stringify({
             module: module,
             action: action,
             payload: payload ?? {}
-        }) + "\n";
-        clientSocketId.write(msg);
-        clientSocketId.flush();
+        }) + "
+";
+        socketLoader.item.write(msg);
+        socketLoader.item.flush();
     }
 }
