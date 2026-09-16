@@ -28,6 +28,21 @@
 
 </div>
 
+## 🎬 Showcase & Desktop Demo
+
+<div align=center>
+  <video src="assets/arch-recording.mp4" controls="controls" muted="muted" poster="assets/preview.png" width="100%"></video>
+  <p>
+    <a href="https://raw.githubusercontent.com/tek-sys-hub/arch-rice/main/assets/arch-recording.mp4">
+      <img src="assets/preview.png" alt="Cherry Arch Hyprland Rice Desktop Demo" width="100%" />
+    </a>
+    <br />
+    <em>▶️ <b>Watch the full desktop demonstration:</b> Click image above or view <a href="assets/arch-recording.mp4">assets/arch-recording.mp4</a></em>
+  </p>
+</div>
+
+---
+
 ## 📖 Overview
 
 **Cherry's Arch Rice** is a complete, modular, and dynamic desktop environment built on **Hyprland** (configured using the modern Lua API). The desktop interface is powered by a custom **Quickshell (Qt6/QML)** frontend alongside a high-performance **Python asynchronous daemon**, offering instant live theming, smart workspace switching, interactive control centers, audio visualization, and deep system integration.
@@ -176,6 +191,7 @@ arch-rice/
 │   ├── fontconfig/           # Font rendering and fallback rules
 │   ├── qtengine/             # Qt styling engine settings
 │   └── systemd/user/         # User systemd units (Cherry daemon socket & service)
+├── assets/                   # Desktop demo recording and showcase previews
 ├── wallpapers/               # Curated collection of high-res wallpapers
 ├── install.sh                # Automated, interactive installer script
 ├── .gitignore                # Excludes bytecode, temporary logs, and sockets
