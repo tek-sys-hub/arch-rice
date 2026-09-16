@@ -112,7 +112,7 @@ GlassCard {
             RowLayout {
                 Layout.fillWidth: true
                 Text {
-                    text: (notif.nAppName || "SYSTEM").toUpperCase()
+                    text: ((notif.nAppName && notif.nAppName.toLowerCase() !== "nisfere" ? notif.nAppName : "Cherry") || "CHERRY").toUpperCase()
                     color: card.accentColor
                     font.bold: true
                     font.family: Theme.fontName

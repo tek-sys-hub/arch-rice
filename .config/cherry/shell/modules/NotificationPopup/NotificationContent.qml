@@ -124,7 +124,7 @@ Item {
 
                     Text {
                         Layout.alignment: Qt.AlignVCenter
-                        text: content.hasNotif ? content.currentNotif.nAppName.toUpperCase() : ""
+                        text: content.hasNotif ? (content.currentNotif.nAppName && content.currentNotif.nAppName.toLowerCase() !== "nisfere" ? content.currentNotif.nAppName : "Cherry").toUpperCase() : ""
                         color: content.isCritical ? Theme.color1 : Theme.selected
                         font.bold: true
                         font.family: Theme.fontName

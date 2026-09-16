@@ -34,7 +34,10 @@ Singleton {
 
         onNotification: notification => {
             notification.tracked = true;
-            const appName = notification.appName || "System";
+            let appName = notification.appName || "Cherry";
+            if (appName.toLowerCase() === "nisfere") {
+                appName = "Cherry";
+            }
 
             const existingIndex = root.findIndex(notification, appName);
             const timeToUse = (existingIndex >= 0) ? root.notifications[existingIndex].timeReceived : Qt.formatTime(new Date(), "HH:mm");
