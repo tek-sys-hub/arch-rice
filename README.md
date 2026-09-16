@@ -37,11 +37,12 @@
 
 <br /><br />
 
-### 🎬 Desktop Playthrough
+### 🎬 Desktop Playthrough (Live Demo)
+<img src="assets/demo.gif" alt="Cherry Desktop Playthrough Demo" width="100%" />
 
-<video src="https://github.com/tek-sys-hub/arch-rice/raw/main/assets/arch-recording.mp4" autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" controls="controls" width="100%"></video>
-
-https://github.com/tek-sys-hub/arch-rice/raw/main/assets/arch-recording.mp4
+<p>
+  <em>▶️ <b>Full Video:</b> You can also view or download the complete 1080p recording at <a href="assets/arch-recording.mp4">assets/arch-recording.mp4</a></em>
+</p>
 
 </div>
 
