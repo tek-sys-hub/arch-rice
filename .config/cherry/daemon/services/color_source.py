@@ -56,10 +56,23 @@ class ColorSource:
         Resolution order:
           1. {theme_name}-{mode}.json  (e.g. tokyo-night-dark.json)
           2. {theme_name}.json         (mode-agnostic fallback)
+          3. Fallback to alternative mode variant if requested mode variant doesn't exist
         """
+        resolved_mode = mode
+        if resolved_mode == "auto":
+            try:
+                cs = (self.config.config_dir / "color-scheme").read_text().strip()
+                resolved_mode = "light" if "light" in cs else "dark"
+            except Exception:
+                resolved_mode = "dark"
+
+        alt_mode = "light" if resolved_mode == "dark" else "dark"
         candidates = [
-            self.config.themes_dir / f"{theme_name}-{mode}.json",
+            self.config.themes_dir / f"{theme_name}-{resolved_mode}.json",
             self.config.themes_dir / f"{theme_name}.json",
+            self.config.themes_dir / f"{theme_name}-{alt_mode}.json",
+            self.config.themes_dir / f"{theme_name}{resolved_mode}.json",
+            self.config.themes_dir / f"{theme_name}{alt_mode}.json",
         ]
         for path in candidates:
             if path.exists():

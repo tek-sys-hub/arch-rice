@@ -213,10 +213,18 @@ class ThemeManager:
         return self._apply_colors(raw, mode, wallpaper_path, "dynamic", None)
 
     def set_colors(self, theme_name: str, mode: str = "dark") -> bool:
-        raw = self.colors.load_static(theme_name, mode)
+        resolved_mode = mode
+        if resolved_mode == "auto":
+            try:
+                cs = (self.config.config_dir / "color-scheme").read_text().strip()
+                resolved_mode = "light" if "light" in cs else "dark"
+            except Exception:
+                resolved_mode = "dark"
+
+        raw = self.colors.load_static(theme_name, resolved_mode)
         state = self.state.load()
         wallpaper = state.wallpaper if state else ""
-        return self._apply_colors(raw, mode, wallpaper, "static", theme_name)
+        return self._apply_colors(raw, resolved_mode, wallpaper, "static", theme_name)
 
     def _get_or_create_thumbnail(self, video_path: Path) -> Path:
         thumb_dir = self.config.cache_dir / "thumbnails"
